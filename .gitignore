@@ -72,13 +72,6 @@ dmypy.json
 .env
 .env.*
 
-# Data
-data/raw/
-data/processed/
-data/output/
-
-# Allow sample data
-!data/sample/
 
 # Miscellaneous
 *.swp
