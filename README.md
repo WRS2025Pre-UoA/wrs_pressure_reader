@@ -25,29 +25,11 @@
 
 ### `src/`
 
-- `__init__.py`: ディレクトリがPythonパッケージであることを示します。
   
 - `main.py`: メインスクリプト。他のモジュールから関数を呼び出して、画像の前処理、針の検出、角度の計算、そして圧力値の計算を実行します。
 
-- `image_processing.py`: 画像の前処理に関連する関数を定義します。例えば、グレースケール変換やぼかし処理など。
+- `detect_pressure_gauge_needle.py`: 圧力計の針を検出し、傾きを出力する
 
-- `needle_detection.py`: 圧力計の針を画像内で検出するための関数を定義します。
-
-- `angle_calculation.py`: 針の位置に基づいて角度を計算するための関数を定義します。
-
-- `pressure_calculation.py`: 角度から圧力値を計算するための関数を定義します。
-
-### `tests/`
-
-- `__init__.py`: ディレクトリがPythonパッケージであることを示します。
-
-- `test_image_processing.py`: `image_processing.py`の関数に対するテストを含みます。
-
-- `test_needle_detection.py`: `needle_detection.py`の関数に対するテストを含みます。
-
-- `test_angle_calculation.py`: `angle_calculation.py`の関数に対するテストを含みます。
-
-- `test_pressure_calculation.py`: `pressure_calculation.py`の関数に対するテストを含みます。
 
 ### `requirements.txt`
 
