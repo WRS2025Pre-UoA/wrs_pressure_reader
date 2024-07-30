@@ -12,6 +12,7 @@ def detect_pressure_gauge_needle(image, output_path):
     
     # Hough変換で直線を検出
     lines = cv2.HoughLinesP(edges, 1, np.pi / 180, threshold=100, minLineLength=50, maxLineGap=10)
+
     
     if lines is not None:
         max_len = 0
@@ -28,13 +29,29 @@ def detect_pressure_gauge_needle(image, output_path):
         if needle_line is not None:
             x1, y1, x2, y2 = needle_line
             
+            h, w = image.shape[:2]
+            cx, cy = w // 2, h // 2
+            
+            # 中心からの距離を計算
+            dist1 = np.sqrt((x1 - cx) ** 2 + (y1 - cy) ** 2)
+            dist2 = np.sqrt((x2 - cx) ** 2 + (y2 - cy) ** 2)
+            
+            # 中心に近い方を針の根本とする
+            if dist1 < dist2:
+                base_x, base_y, tip_x, tip_y = x1, y1, x2, y2
+            else:
+                base_x, base_y, tip_x, tip_y = x2, y2, x1, y1
+
             # 針の直線を描画
-            cv2.line(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.line(image, (base_x, base_y), (tip_x, tip_y), (0, 255, 0), 2)
             
             # 傾きを計算
-            angle = np.degrees(np.arctan2(y2 - y1, x2 - x1))
+            arc_tan = np.arctan2(tip_y - base_y, tip_x - base_x)
+            angle = np.degrees(arc_tan)
+            if angle < 0:
+                angle += 360
             print(f'針の角度: {angle} 度')
-            
+
             # 画像を保存
             cv2.imwrite(output_path, image)
             print(f'結果の画像が保存されました: {output_path}')
@@ -66,7 +83,7 @@ def process_images_in_folder(input_folder, output_folder):
             print(f'画像を読み込めませんでした: {input_image_path}')
 
 # 入力フォルダのパス
-input_folder_path = '/Users/nagasawa/wrs/data/cropped_images'
+input_folder_path = '/Users/nagasawa/wrs/data/test_20240730'
 
 # 出力フォルダのパス
 output_folder_path = '/Users/nagasawa/wrs/data/result'
