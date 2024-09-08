@@ -82,3 +82,5 @@ dmypy.json
 
 # 仮想環境ディレクトリを無視
 wrs/
+
+code_test.py
