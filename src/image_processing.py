@@ -7,7 +7,7 @@ def process_image(image_path):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # バイナリ化 (しきい値の値は画像に応じて調整)
-    _, bw = cv2.threshold(gray, 60, 255, cv2.THRESH_BINARY)
+    _, bw = cv2.threshold(gray, 180, 255, cv2.THRESH_BINARY)
 
     # ノイズ除去（小さいゴミを取り除く）
     bw = cv2.medianBlur(bw, 5)
