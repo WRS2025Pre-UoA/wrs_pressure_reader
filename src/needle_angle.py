@@ -42,3 +42,28 @@ def calculate_angle(center, line):
 
     return angle_deg
 
+
+def pressure_value_from_angle(angle_deg, max_pressure=100):
+    """
+    針の角度から圧力計の値を計算する関数。
+    228度の時に0Pa, 360度と0度の時に0.5MPa, 132度の時に1MPa。
+
+    Parameters:
+    angle_deg (float): 針の角度（度数法）
+
+    Returns:
+    float: 圧力値（MPa）
+    """
+
+    if 228 <= angle_deg <= 360:
+        # 228度から360度までの範囲では、0Paから0.5MPaに線形補間
+        pressure = (angle_deg - 228) * (0.5 / (360 - 228))
+    elif 0 <= angle_deg <= 132:
+        # 0度から132度までの範囲では、0.5MPaから1MPaに線形補間
+        pressure = 0.5 + (angle_deg / 132) * (1 - 0.5)
+    else:
+        # 132度から228度までは0MPa
+        pressure = 0.0
+
+    return pressure
+
