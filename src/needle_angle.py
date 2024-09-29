@@ -55,15 +55,21 @@ def pressure_value_from_angle(angle_deg, max_pressure=100):
     float: 圧力値（MPa）
     """
 
-    if 228 <= angle_deg <= 360:
-        # 228度から360度までの範囲では、0Paから0.5MPaに線形補間
-        pressure = (angle_deg - 228) * (0.5 / (360 - 228))
-    elif 0 <= angle_deg <= 132:
-        # 0度から132度までの範囲では、0.5MPaから1MPaに線形補間
-        pressure = 0.5 + (angle_deg / 132) * (1 - 0.5)
+    
+    if 228 <= angle_deg < 270:
+        # 228度から270度までは0MPaから0.16MPaに線形補間
+        pressure = (angle_deg - 228) * (0.16 / (270 - 228))
+    elif 270 <= angle_deg <= 360:
+        # 270度から360度までは0.16MPaから0.5MPaに線形補間
+        pressure = 0.16 + (angle_deg - 270) * (0.34 / (360 - 270))
+    elif 0 <= angle_deg <= 90:
+        # 0度から90度までは0.5MPaから0.84MPaに線形補間
+        pressure = 0.5 + (angle_deg / 90) * (0.84 - 0.5)
+    elif 90 < angle_deg <= 132:
+        # 90度から132度までは0.84MPaから1.0MPaに線形補間
+        pressure = 0.84 + ((angle_deg - 90) / (132 - 90)) * (1.0 - 0.84)
     else:
         # 132度から228度までは0MPa
         pressure = 0.0
-
     return pressure
 
